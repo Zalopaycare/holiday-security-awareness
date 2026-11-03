@@ -157,7 +157,6 @@
       var hgt = box.offsetHeight, wid = box.offsetWidth;
       paras.forEach(function (q) { q.innerHTML = ''; });
       if (hgt) box.style.minHeight = hgt + 'px';
-      if (wid > 160 && !box.querySelector('.menu')) box.style.width = wid + 'px';
       next();
     }
     if (withDots) {

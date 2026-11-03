@@ -35,7 +35,7 @@ Nói cách khác, kẻ gian tăng ca đúng vào lúc hầu hết chúng ta ngh�
 
 *Nguồn: CISA và FBI, cảnh báo chung "Ransomware Awareness for Holidays and Weekends"; Semperis, "2025 Ransomware Holiday Risk Report", 24/11/2025.*
 
-### Khi Starter mải chờ hàng, cảnh giác cũng lơi đi
+### Khi Starter mải chờ hàng, cảnh giác cũng giảm đi
 
 Lý do thứ hai không nằm ở hệ thống, mà nằm ở chính chúng ta. Mùa lễ là lúc Starter vừa chờ hàng, vừa đặt vé, vừa săn sale. Mỗi việc ấy kéo theo một loạt tin nhắn thật, và giữa những tin nhắn thật, một tin nhắn giả trông chẳng khác gì.
 
