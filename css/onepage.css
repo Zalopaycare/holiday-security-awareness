@@ -948,3 +948,76 @@ body{font-size:1rem}
 }
 @keyframes wiggle{0%,62%,100%{transform:rotate(0)}68%{transform:rotate(-7deg) scale(1.05)}74%{transform:rotate(6deg) scale(1.05)}80%{transform:rotate(-5deg)}86%{transform:rotate(4deg)}92%{transform:rotate(-2deg)}}
 @keyframes rock{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
+
+/* ===== sidebar: where am I + quick jump (wide screens only; the top tabs cover narrow ones) ===== */
+.side{display:none}
+@media (min-width:1260px){
+  .side{display:block;position:fixed;z-index:40;top:50%;left:calc(50% - 24.5rem - 15.5rem);width:13.5rem;transform:translateY(-50%);
+    opacity:0;pointer-events:none;transition:opacity .3s ease}
+  .side.is-on{opacity:1;pointer-events:auto}
+  .side__t{font-size:1.05rem;letter-spacing:.14em;color:var(--muted);margin:0 0 10px 14px}
+  .side a{display:grid;grid-template-columns:1.3rem 1fr;gap:8px;align-items:start;padding:9px 10px 9px 12px;border-left:3px solid var(--line);
+    text-decoration:none;color:var(--muted);font-size:.86rem;line-height:1.35;transition:color .15s,border-color .15s,background .15s}
+  .side a b{font-family:var(--font-pixel);font-weight:400;font-size:1.35rem;line-height:1;color:inherit}
+  .side a:hover{color:#fff;border-left-color:var(--blue-2)}
+  .side a.is-active{color:#fff;border-left-color:var(--yellow);background:rgba(245,196,0,.08)}
+  .side a.is-active b{color:var(--yellow)}
+  .side a:focus-visible{outline:2px solid var(--yellow);outline-offset:2px}
+}
+
+/* sidebar on medium screens: a slim rail pinned to the left edge, numbers only, title on hover */
+@media (min-width:860px) and (max-width:1259.98px){
+  .side{display:block;position:fixed;z-index:40;top:50%;left:10px;width:auto;transform:translateY(-50%);opacity:0;pointer-events:none;transition:opacity .3s ease}
+  .side.is-on{opacity:1;pointer-events:auto}
+  .side__t{display:none}
+  .side a{position:relative;display:block;padding:9px 12px;border-left:3px solid var(--line);text-decoration:none;color:var(--muted);background:rgba(0,10,46,.85)}
+  .side a b{font-family:var(--font-pixel);font-weight:400;font-size:1.5rem;line-height:1;color:inherit;display:block}
+  .side a span{position:absolute;left:100%;top:50%;transform:translateY(-50%);margin-left:8px;width:15rem;padding:8px 10px;background:var(--box);color:#fff;font-size:.86rem;line-height:1.35;opacity:0;pointer-events:none;transition:opacity .15s}
+  .side a:hover span,.side a:focus-visible span{opacity:1}
+  .side a:hover{color:#fff;border-left-color:var(--blue-2)}
+  .side a.is-active{color:var(--yellow);border-left-color:var(--yellow);background:rgba(40,36,20,.92)}
+}
+
+/* reading progress bar */
+.topbar{position:sticky}
+.progress{position:absolute;left:0;right:0;bottom:-6px;height:5px;background:rgba(255,255,255,.10)}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--yellow))}
+.side__pct{color:var(--yellow);margin-left:6px;letter-spacing:.04em}
+
+/* ===== level track (replaces the sidebar list and the top progress line) ===== */
+.trk{display:none}
+@media (min-width:860px){
+  .trk{--p:0%;--h:200px;display:block;position:fixed;z-index:40;left:14px;top:50%;height:var(--h);width:18px;transform:translateY(-50%);opacity:0;pointer-events:none;transition:opacity .3s ease}
+  .trk.is-on{opacity:1;pointer-events:auto}
+  .trk__line{position:absolute;left:7px;top:0;bottom:0;width:4px;background:#22306B}
+  .trk__line i{display:block;width:100%;height:var(--p);background:linear-gradient(var(--green),var(--yellow))}
+  .trk__cat{position:absolute;left:-7px;top:var(--p);width:32px;max-width:none;transform:translateY(-55%);z-index:2;pointer-events:none}
+  .trk a{position:absolute;left:0;display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--muted);white-space:nowrap}
+  .trk a:nth-of-type(1){top:0}.trk a:nth-of-type(2){top:25%}.trk a:nth-of-type(3){top:50%}.trk a:nth-of-type(4){top:75%}
+  .trk a{transform:translateY(-50%)}
+  .trk a b{width:18px;height:18px;display:grid;place-items:center;background:#22306B;color:var(--muted);font-family:var(--font-pixel);font-weight:400;font-size:1rem;line-height:1}
+  .trk a span{font-family:var(--font-pixel);font-size:.95rem;letter-spacing:.08em;display:none;padding-left:10px}
+  .trk a.is-done b{background:var(--green);color:var(--ink)}
+  .trk a.is-active b{background:var(--yellow);color:var(--ink)}
+  .trk a.is-active span{color:var(--yellow)}
+  .trk a:hover span{color:#fff}
+  .trk a:focus-visible{outline:2px solid var(--yellow);outline-offset:3px}
+}
+@media (min-width:1100px){.trk a span{display:inline}}
+@media (min-width:1260px){.trk{left:calc(50% - 24.5rem - 8.5rem)}}
+
+/* level track: longer, no "PHẦN" labels (the top tabs already name the parts) */
+@media (min-width:860px){
+  .trk{--h:min(56vh,380px)}
+  .trk a span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;padding:0}
+}
+
+/* reading progress sits on the line under the top bar */
+.topbar{border-bottom:0}
+.progress{--p:0%;position:absolute;left:0;right:0;bottom:0;top:auto;height:4px;background:var(--line)}
+.progress i{display:block;height:100%;width:var(--p);background:linear-gradient(90deg,var(--green),var(--yellow))}
+.progress img{position:absolute;left:var(--p);bottom:-3px;width:30px;max-width:none;transform:translateX(-60%);pointer-events:none}
+
+.progress img{left:clamp(18px,var(--p),calc(100% - 14px))}
+
+.confetti{position:fixed;inset:0;width:100%;height:100%;z-index:60;pointer-events:none}

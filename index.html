@@ -29,6 +29,7 @@
       <a href="#phan-4"><span>PHẦN </span><b>4</b></a>
     </nav>
   </div>
+  <div class="progress" role="progressbar" aria-label="Tiến độ đọc" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i><img class="px" src="assets/img/toro-hero.png" alt=""></div>
 </header>
 
 <main id="top">
@@ -253,6 +254,28 @@
   function on(){var y=window.scrollY+120,i=-1;secs.forEach(function(s,k){if(s&&s.offsetTop<=y)i=k;});
     links.forEach(function(a,k){a.classList.toggle('is-active',k===i);});}
   window.addEventListener('scroll',on,{passive:true});on();
+  // reading progress drawn on the line under the top bar
+  var pg=document.querySelector('.progress');
+  // pixel confetti, fired once when the reader reaches the end
+  var fired=false;
+  function confetti(){
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+    var c=document.createElement('canvas'),W=c.width=window.innerWidth,H=c.height=window.innerHeight,x=c.getContext('2d');
+    c.className='confetti';c.setAttribute('aria-hidden','true');document.body.appendChild(c);
+    var cols=['#F5C400','#00CF6A','#0068FF','#FF5A4F','#79ECB6','#ffffff'],ps=[],i,ox=W-30,oy=58;
+    for(i=0;i<150;i++){var fromBar=i<90,a=fromBar?Math.PI*(.55+Math.random()*.6):-Math.PI*(.2+Math.random()*.6),s=fromBar?5+Math.random()*10:7+Math.random()*9;
+      ps.push({x:fromBar?ox:W*(.15+Math.random()*.7),y:fromBar?oy:H+10,vx:Math.cos(a)*s,vy:fromBar?Math.sin(a)*s*.6:Math.sin(a)*s*1.6,z:6+Math.floor(Math.random()*3)*3,c:cols[i%cols.length],r:Math.random()*6});}
+    var t0=null;
+    function frame(ts){if(t0===null)t0=ts;var t=ts-t0;x.clearRect(0,0,W,H);
+      ps.forEach(function(p){p.vy+=.22;p.vx*=.99;p.x+=p.vx;p.y+=p.vy;p.r+=.2;
+        x.globalAlpha=Math.max(0,1-t/3200);x.fillStyle=p.c;var w=p.z*(.5+.5*Math.abs(Math.cos(p.r)));x.fillRect(Math.round(p.x),Math.round(p.y),Math.round(w),p.z);});
+      if(t<3200)requestAnimationFrame(frame);else c.remove();}
+    requestAnimationFrame(frame);
+  }
+  function onProg(){var max=document.documentElement.scrollHeight-window.innerHeight,v=max>0?Math.min(100,Math.max(0,window.scrollY/max*100)):0;
+    pg.style.setProperty('--p',v.toFixed(1)+'%');pg.setAttribute('aria-valuenow',Math.round(v));
+    if(v>=99.5&&!fired){fired=true;confetti();}}
+  if(pg){window.addEventListener('scroll',onProg,{passive:true});window.addEventListener('resize',onProg);onProg();}
   // one-time reveal of each title bar when it scrolls into view
   var heads=[].slice.call(document.querySelectorAll('.part__head'));
   if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches){
