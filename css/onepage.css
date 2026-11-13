@@ -1021,3 +1021,74 @@ body{font-size:1rem}
 .progress img{left:clamp(18px,var(--p),calc(100% - 14px))}
 
 .confetti{position:fixed;inset:0;width:100%;height:100%;z-index:60;pointer-events:none}
+
+/* ===== sidebar tree: parts with their sub-sections (wide screens) ===== */
+.tree{display:none}
+@media (min-width:1180px){
+  .tree{display:block;position:fixed;z-index:40;top:50%;left:max(14px,calc(50% - 24.5rem - 15rem));width:12.6rem;max-height:calc(100vh - 110px);overflow:auto;scrollbar-width:none;
+    transform:translateY(-46%);opacity:0;pointer-events:none;transition:opacity .3s ease;font-size:.8rem;line-height:1.35}
+  .tree::-webkit-scrollbar{display:none}
+  .tree.is-on{opacity:1;pointer-events:auto}
+  .tree__part{border-left:3px solid var(--line);padding:7px 0 7px 11px}
+  .tree__part.is-open{border-left-color:var(--yellow)}
+  .tree__p{display:block;text-decoration:none;color:var(--muted)}
+  .tree__p b{font-weight:700;color:inherit}
+  .tree__p:hover{color:#fff}
+  .tree__part.is-open .tree__p{color:#fff}
+  .tree__part.is-open .tree__p b{color:var(--yellow)}
+  .tree ul{list-style:none;margin:0;padding:0;display:none}
+  .tree__part.is-open ul{display:block;margin-top:6px}
+  .tree li a{position:relative;display:block;padding:3px 0 3px 14px;text-decoration:none;color:var(--muted)}
+  .tree li a::before{content:"";position:absolute;left:1px;top:.72em;width:5px;height:5px;background:currentColor}
+  .tree li a:hover{color:#fff}
+  .tree li a.is-active{color:var(--yellow);font-weight:700}
+  .tree a:focus-visible{outline:2px solid var(--yellow);outline-offset:2px}
+}
+
+/* balance: centre the sidebar + content pair as one group on wide screens */
+@media (min-width:1180px){
+  .tree{left:calc(50% - 32rem)}
+  .part>.wrap,.more>.wrap{margin-left:calc(50% - 17rem);margin-right:auto}
+}
+
+/* banner follows the same column as the parts; sidebar is visible from the top */
+@media (min-width:1180px){
+  .hero>.wrap{margin-left:calc(50% - 17rem);margin-right:auto}
+  .tree,.tree.is-on{opacity:1;pointer-events:auto}
+  .tree{background:rgba(0,10,46,.72);padding:6px 8px 6px 0;box-sizing:content-box}
+}
+
+/* wide screens: the sidebar is the only table of contents (no repeated part lists) */
+@media (min-width:1180px){
+  .topnav{display:none}
+  .hero .jump{display:none}
+}
+
+/* sidebar heading so the list reads as the four main parts */
+@media (min-width:1180px){
+  .tree__t{margin:0 0 8px;padding:5px 9px;background:var(--yellow);color:var(--ink);font-size:1rem;letter-spacing:.08em;line-height:1.1;display:inline-block}
+  .tree{padding:8px 8px 8px 0}
+  .tree__p b{display:block;font-family:var(--font-pixel);font-weight:400;font-size:1rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:1px}
+}
+
+@media (min-width:1180px){.tree__t{white-space:nowrap;letter-spacing:.03em;font-size:.95rem}}
+
+/* banner: no sidebar; the four parts are introduced under the intro. The banner spans the same
+   width as the sidebar + content group below, so both stay centred and share their outer edges */
+@media (min-width:1180px){
+  .tree{opacity:0;pointer-events:none}
+  .tree.is-on{opacity:1;pointer-events:auto}
+  .hero>.wrap{width:min(100% - 2*var(--gutter),64rem);margin-left:auto;margin-right:auto}
+  .hero__lede{max-width:49rem;margin-inline:auto;text-align-last:center}
+  .hero .jump{display:grid;grid-template-columns:repeat(4,1fr)}
+}
+
+/* ===== sidebar sits in the page flow next to the parts and sticks while scrolling =====
+   (it starts level with the "PHẦN 1" bar, so nothing is left empty under the banner) */
+@media (min-width:1180px){
+  .body{display:grid;grid-template-columns:12.6rem 49rem;column-gap:2.4rem;justify-content:center;align-items:start}
+  .body>.part,.body>.more{grid-column:2;min-width:0}
+  .body>.part>.wrap,.body>.more>.wrap{width:100%;margin:0}
+  .body>.tree{grid-column:1;grid-row:1/span 5;position:sticky;top:calc(var(--topbar) + 22px);left:auto;transform:none;
+    width:auto;margin-top:clamp(22px,3vw,32px);max-height:calc(100vh - var(--topbar) - 44px);opacity:1;pointer-events:auto;background:none;padding:0}
+}
