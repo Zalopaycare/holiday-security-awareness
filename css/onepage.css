@@ -1092,3 +1092,6 @@ body{font-size:1rem}
   .body>.tree{grid-column:1;grid-row:1/span 5;position:sticky;top:calc(var(--topbar) + 22px);left:auto;transform:none;
     width:auto;margin-top:clamp(22px,3vw,32px);max-height:calc(100vh - var(--topbar) - 44px);opacity:1;pointer-events:auto;background:none;padding:0}
 }
+
+/* banner label replacing the event logo (same pill as the email banner) */
+.hero__tag{display:inline-block;margin:0;background:#0068FF;color:#fff;font-weight:500;font-size:clamp(.95rem,1.6vw,1.1rem);line-height:1;padding:.6em 1.2em;border-radius:999px}
